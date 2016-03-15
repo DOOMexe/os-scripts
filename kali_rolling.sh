@@ -36,7 +36,7 @@
 
 if [ 1 -eq 0 ]; then    # This is never true, thus it acts as block comments ;)
 ### One liner - Grab the latest version and execute! ###########################
-wget -qO kali.sh https://raw.github.com/g0tmi1k/os-scripts/master/kali.sh && bash kali.sh -dns -burp -openvas -rolling -keyboard gb -timezone "Europe/London"
+#wget -qO kali.sh https://raw.github.com/g0tmi1k/os-scripts/master/kali.sh && bash kali.sh -dns -burp -openvas -rolling -keyboard gb -timezone "Europe/London"
 ################################################################################
 ## Shorten URL: >->->   wget -qO- http://bit.do/postkali | bash   <-<-<
 ##  Alt Method: curl -s -L -k https://raw.github.com/g0tmi1k/kali-postinstall/master/kali_postinstall.sh > kali.sh | nohup bash
@@ -202,16 +202,16 @@ timeout 300 curl --progress -k -L -f "https://status.github.com/api/status.json"
 
 
 ##### Enable default network repositories ~ http://docs.kali.org/general-use/kali-linux-sources-list-repositories
-echo -e "\n ${GREEN}[+]${RESET} Enabling default kali ${GREEN}network repositories${RESET} ~ ...if they were not selected during installation"
-#--- Add network repositories
-file=/etc/apt/sources.list; [ -e "${file}" ] && cp -n $file{,.bkup}
-([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
+#echo -e "\n ${GREEN}[+]${RESET} Enabling default kali ${GREEN}network repositories${RESET} ~ ...if they were not selected during installation"
+##--- Add network repositories
+#file=/etc/apt/sources.list; [ -e "${file}" ] && cp -n $file{,.bkup}
+#([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
 #--- Main
-grep -q 'deb .* sana main non-free contrib' "${file}" 2>/dev/null || echo "deb http://http.kali.org/kali sana main non-free contrib" >> "${file}"
-grep -q 'deb-src .* sana main non-free contrib' "${file}" 2>/dev/null || echo "deb-src http://http.kali.org/kali sana main non-free contrib" >> "${file}"
+#grep -q 'deb .* sana main non-free contrib' "${file}" 2>/dev/null || echo "deb http://http.kali.org/kali sana main non-free contrib" >> "${file}"
+#grep -q 'deb-src .* sana main non-free contrib' "${file}" 2>/dev/null || echo "deb-src http://http.kali.org/kali sana main non-free contrib" >> "${file}"
 #--- Security
-grep -q 'deb .* sana/updates main contrib non-free' "${file}" 2>/dev/null || echo "deb http://security.kali.org/kali-security sana/updates main contrib non-free" >> "${file}"
-grep -q 'deb-src .* sana/updates main contrib non-free' "${file}" 2>/dev/null || echo "deb-src http://security.kali.org/kali-security sana/updates main contrib non-free" >> "${file}"
+#grep -q 'deb .* sana/updates main contrib non-free' "${file}" 2>/dev/null || echo "deb http://security.kali.org/kali-security sana/updates main contrib non-free" >> "${file}"
+#grep -q 'deb-src .* sana/updates main contrib non-free' "${file}" 2>/dev/null || echo "deb-src http://security.kali.org/kali-security sana/updates main contrib non-free" >> "${file}"
 #--- Disable CD repositories
 sed -i '/kali/ s/^\( \|\t\|\)deb cdrom/#deb cdrom/g' "${file}"
 #--- Update
@@ -293,22 +293,22 @@ fi
 
 
 ##### Check to see if there is a second Ethernet card (if so, set an static IP address)
-ip addr show eth1 &>/dev/null
-if [[ "$?" == 0 ]]; then
+#ip addr show eth1 &>/dev/null
+#if [[ "$?" == 0 ]]; then
   ##### Set a static IP address (192.168.155.175/24) on eth1
-  echo -e "\n ${GREEN}[+]${RESET} Setting a ${GREEN}static IP address${RESET} (${BOLD}192.168.155.175/24${RESET}) on ${BOLD}eth1${RESET}"
-  ip addr add 192.168.155.175/24 dev eth1 2>/dev/null
-  route delete default gw 192.168.155.1 2>/dev/null
-  file=/etc/network/interfaces.d/eth1.cfg; [ -e "${file}" ] && cp -n $file{,.bkup}
-  grep -q '^iface eth1 inet static' "${file}" 2>/dev/null || cat <<EOF > "${file}"
-auto eth1
-iface eth1 inet static
-    address 192.168.155.175
-    netmask 255.255.255.0
-    gateway 192.168.155.1
-    post-up route delete default gw 192.168.155.1
-EOF
-fi
+#  echo -e "\n ${GREEN}[+]${RESET} Setting a ${GREEN}static IP address${RESET} (${BOLD}192.168.155.175/24${RESET}) on ${BOLD}eth1${RESET}"
+#  ip addr add 192.168.155.175/24 dev eth1 2>/dev/null
+#  route delete default gw 192.168.155.1 2>/dev/null
+#  file=/etc/network/interfaces.d/eth1.cfg; [ -e "${file}" ] && cp -n $file{,.bkup}
+#  grep -q '^iface eth1 inet static' "${file}" 2>/dev/null || cat <<EOF > "${file}"
+#auto eth1
+#iface eth1 inet static
+#    address 192.168.155.175
+#    netmask 255.255.255.0
+#    gateway 192.168.155.1
+#    post-up route delete default gw 192.168.155.1
+#EOF
+#fi
 
 
 ##### Set static & protecting DNS name servers.   Note: May cause issues with forced values (e.g. captive portals etc)
@@ -391,20 +391,20 @@ if [ "${freezeDEB}" != "false" ]; then
 fi
 
 
-if [ "${rolling}" != "false" ]; then
+#if [ "${rolling}" != "false" ]; then
   ##### Enable default network repositories ~ http://docs.kali.org/general-use/kali-linux-sources-list-repositories
-  echo -e "\n ${GREEN}[+]${RESET} Enabling ${GREEN}rolling repositories${RESET} ~ ${BOLD}Should only be used by advanced users${RESET}! Using this means tools will be updated more frequently"
+#  echo -e "\n ${GREEN}[+]${RESET} Enabling ${GREEN}rolling repositories${RESET} ~ ${BOLD}Should only be used by advanced users${RESET}! Using this means tools will be updated more frequently"
   #--- Add network repositories
-  file=/etc/apt/sources.list; [ -e "${file}" ] && cp -n $file{,.bkup}
-  ([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
+#  file=/etc/apt/sources.list; [ -e "${file}" ] && cp -n $file{,.bkup}
+#  ([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
   #--- Enable Rolling
-  ([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
-  grep -q 'deb .* kali-rolling main contrib non-free' "${file}" 2>/dev/null || echo -e "\n\n# Kali Rolling\ndeb http://http.kali.org/kali kali-rolling main contrib non-free" >> "${file}"
-  grep -q 'deb-src .* kali-rolling main contrib non-free' "${file}" 2>/dev/null || echo -e "deb-src http://http.kali.org/kali kali-rolling main contrib non-free" >> "${file}"
-  #grep -q 'sana-proposed-updates main contrib non-free' "${file}" 2>/dev/null || echo -e "deb http://repo.kali.org/kali sana-proposed-updates main contrib non-free\ndeb-src http://repo.kali.org/kali sana-proposed-updates main contrib non-free" >> "${file}"
+#  ([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
+#  grep -q 'deb .* kali-rolling main contrib non-free' "${file}" 2>/dev/null || echo -e "\n\n# Kali Rolling\ndeb http://http.kali.org/kali kali-rolling main contrib non-free" >> "${file}"
+#  grep -q 'deb-src .* kali-rolling main contrib non-free' "${file}" 2>/dev/null || echo -e "deb-src http://http.kali.org/kali kali-rolling main contrib non-free" >> "${file}"
+#  #grep -q 'sana-proposed-updates main contrib non-free' "${file}" 2>/dev/null || echo -e "deb http://repo.kali.org/kali sana-proposed-updates main contrib non-free\ndeb-src http://repo.kali.org/kali sana-proposed-updates main contrib non-free" >> "${file}"
   #--- Disable main repo
-  sed -i 's_deb http://http.kali.org/kali sana main_#deb http://http.kali.org/kali sana main_' ${file}
-  sed -i 's_deb-src http://http.kali.org/kali sana main_#deb-src http://http.kali.org/kali sana main_' ${file}
+#  sed -i 's_deb http://http.kali.org/kali sana main_#deb http://http.kali.org/kali sana main_' ${file}
+#  sed -i 's_deb-src http://http.kali.org/kali sana main_#deb-src http://http.kali.org/kali sana main_' ${file}
   #--- Update
   apt-get -qq update
   if [[ "$?" -ne 0 ]]; then
@@ -414,7 +414,7 @@ if [ "${rolling}" != "false" ]; then
     curl -sI http://http.kali.org/README
     exit 1
   fi
-fi
+#fi
 
 
 ##### Update OS from network repositories
@@ -2327,7 +2327,7 @@ apt-get install -y -qq pwgen || echo -e ' '${RED}'[!] Issue with apt-get'${RESET
 
 ##### Install midnight commander
 #echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}midnight commander${RESET} ~ CLI file manager"
-#apt-get -y -qq install mc || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+apt-get -y -qq install mc || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 
 
 ##### Install htop
@@ -2420,8 +2420,8 @@ sed -i 's#^.*"Default editor".*#\t<Setting name="Default editor">2/usr/bin/geany
 
 
 ##### Install xrdp
-#echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}xrdp${RESET} ~ GUI remote desktop"
-#apt-get -y -qq install xrdp || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}xrdp${RESET} ~ GUI remote desktop"
+apt-get -y -qq install xrdp || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 
 
 ##### Install x2go client
@@ -3114,10 +3114,10 @@ mv -f /usr/share/wordlists/10k{\ most\ ,_most_}common.txt
 [ -e /usr/share/dirb/wordlists ] && ln -sf /usr/share/dirb/wordlists /usr/share/wordlists/dirb
 #[ -e /usr/share/seclists ] && ln -sf /usr/share/seclists /usr/share/wordlists/seclists
 #--- Linking to more - files
-#ln -sf /usr/share/sqlmap/txt/wordlist.txt /usr/share/wordlists/sqlmap.txt
+ln -sf /usr/share/sqlmap/txt/wordlist.txt /usr/share/wordlists/sqlmap.txt
 ##--- Not enough? Want more? Check below!
-##apt-cache search wordlist
-##find / \( -iname '*wordlist*' -or -iname '*passwords*' \) #-exec ls -l {} \;
+apt-cache search wordlist
+find / \( -iname '*wordlist*' -or -iname '*passwords*' \) #-exec ls -l {} \;
 #--- Remove old temp files
 rm -f /tmp/10kcommon.zip
 
@@ -3145,12 +3145,12 @@ apt-get -y -qq install apt-show-versions || echo -e ' '${RED}'[!] Issue with apt
 
 
 ##### Install Exploit-DB binaries
-#echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}Installing Exploit-DB binaries${RESET} ~ pre-compiled exploits"
-#apt-get -y -qq install git || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
-#git clone -q https://github.com/offensive-security/exploit-database-bin-sploits.git /opt/exploitdb-bin-git/
-#pushd /opt/exploitdb-bin/ >/dev/null
-#git pull -q
-#popd >/dev/null
+echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}Installing Exploit-DB binaries${RESET} ~ pre-compiled exploits"
+apt-get -y -qq install git || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+git clone -q https://github.com/offensive-security/exploit-database-bin-sploits.git /opt/exploitdb-bin-git/
+pushd /opt/exploitdb-bin/ >/dev/null
+git pull -q
+popd >/dev/null
 
 
 ##### Install Babel scripts
@@ -3191,13 +3191,13 @@ echo "source ~/peda/peda.py" >> ~/.gdbinit
 
 
 ##### Install radare2 (https://bugs.kali.org/view.php?id=2169)
-#echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}radare2${RESET} ~ reverse engineering framework"
-#apt-get -y -qq install git gdb || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
-#git clone -q https://github.com/radare/radare2.git /opt/radare2-git/
-#pushd /opt/radare2-git/ >/dev/null
-#git pull -q
-#bash sys/install.sh
-#popd >/dev/null
+echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}radare2${RESET} ~ reverse engineering framework"
+apt-get -y -qq install git gdb || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+git clone -q https://github.com/radare/radare2.git /opt/radare2-git/
+pushd /opt/radare2-git/ >/dev/null
+git pull -q
+bash sys/install.sh
+popd >/dev/null
 
 
 ##### Install ropeme (https://bugs.kali.org/view.php?id=2328)
@@ -3577,9 +3577,9 @@ echo "FTP" > /etc/pure-ftpd/welcome.msg
 apt-get install -y -qq cowsay || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 echo "Moo" | /usr/games/cowsay > /etc/pure-ftpd/welcome.msg
 #--- SSL
-#mkdir -p /etc/ssl/private/
-#openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
-#chmod -f 0600 /etc/ssl/private/*.pem
+mkdir -p /etc/ssl/private/
+openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
+chmod -f 0600 /etc/ssl/private/*.pem
 ln -sf /etc/pure-ftpd/conf/PureDB /etc/pure-ftpd/auth/50pure
 #--- Apply settings
 #systemctl restart pure-ftpd
@@ -3774,7 +3774,7 @@ sed -i 's/^PermitRootLogin .*/PermitRootLogin yes/g' "${file}"      # Accept pas
 sed -i 's/^#AuthorizedKeysFile /AuthorizedKeysFile /g' "${file}"    # Allow for key based login
 #sed -i 's/^Port .*/Port 2222/g' "${file}"
 #--- Enable ssh at startup
-#systemctl enable ssh
+systemctl enable ssh
 #--- Setup alias (handy for 'zsh: correct 'ssh' to '.ssh' [nyae]? n')
 file=~/.bash_aliases; [ -e "${file}" ] && cp -n $file{,.bkup}   #/etc/bash.bash_aliases
 ([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
@@ -3830,6 +3830,7 @@ echo -e " ${YELLOW}[i]${RESET} + Agree/Accept to: Maltego, OWASP ZAP, w3af, etc"
 echo -e " ${YELLOW}[i]${RESET} + Setup git:   git config --global user.name <name>;git config --global user.email <email>"
 #echo -e " ${YELLOW}[i]${RESET} + ${YELLOW}Change time zone${RESET} & ${YELLOW}keyboard layout${RESET} (...if not ${BOLD}${timezone}${RESET} & ${BOLD}${keyboardLayout}${RESET})"
 echo -e " ${YELLOW}[i]${RESET} + ${YELLOW}Change default passwords${RESET}: PostgreSQL/MSF, MySQL, OpenVAS, BeEF XSS, etc"
+echo -e " ${YELLOW}[i]${RESET} BeEF password: ${password}   ***${BOLD}CHANGE THIS ASAP${RESET}***.   Edit: /usr/share/beef-xss/config.yaml"
 echo -e " ${YELLOW}[i]${RESET} + ${YELLOW}Reboot${RESET}"
 (dmidecode | grep -iq virtual) && echo -e " ${YELLOW}[i]${RESET} + Take a snapshot   (Virtual machine detected!)"
 
